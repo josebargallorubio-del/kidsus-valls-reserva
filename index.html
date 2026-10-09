@@ -13,6 +13,7 @@ h2{font-size:18px;margin:0 0 14px}h2 span{display:inline-block;width:26px;height
 .days{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}@media(min-width:560px){.days{grid-template-columns:repeat(4,1fr)}}
 .day{border:2px solid #eee;border-radius:14px;padding:10px;text-align:center}.day b{display:block;font-size:13px;color:#7a7a7a;text-transform:uppercase}.day .n{font-size:28px;font-weight:bold;color:var(--dark)}
 .slot{display:block;width:100%;margin-top:8px;padding:10px;border:2px solid var(--teal);background:#fff;color:var(--teal);border-radius:24px;font-weight:bold;font-size:15px;cursor:pointer}
+.lab{margin-top:12px;font-size:12px;font-weight:bold;text-transform:uppercase;letter-spacing:.5px;color:#888}
 .slot.sel{background:var(--teal);color:#fff}
 label{display:block;font-size:14px;font-weight:bold;margin:12px 0 5px}input,select,textarea{width:100%;padding:12px;border:1.5px solid #ddd;border-radius:10px;font-size:16px;font-family:inherit}
 input:focus,select:focus,textarea:focus{outline:none;border-color:var(--teal)}.row{display:grid;grid-template-columns:2fr 1fr;gap:10px}
@@ -43,12 +44,12 @@ footer{background:var(--dark);color:#fff;text-align:center;font-size:13px;line-h
 </div>
 <script>
 const ENDPOINT="https://formsubmit.co/ajax/josebargallorubio@gmail.com";
-const D=[["dimarts",13],["dimecres",14],["dijous",15],["divendres",16]],H=["17","18"];
+const D=[["dimarts",13],["dimecres",14],["dijous",15],["divendres",16]],H=[["Matí",["11"]],["Tarda",["17","18"]]];
 const q=new URLSearchParams(location.search);let sel=null;
 const txt=id=>{const[,,d,h]=id.split("-");const n=D.find(x=>x[1]==+d)[0];return `${n} ${+d} d'octubre de 2026 a les ${h}:00 h`};
 const days=document.getElementById("days");
 D.forEach(([n,d])=>{const c=document.createElement("div");c.className="day";c.innerHTML=`<b>${n}</b><div class="n">${d}</div><small>octubre</small>`;
-H.forEach(h=>{const b=document.createElement("button");b.type="button";b.className="slot";b.textContent=h+":00";b.dataset.id=`2026-10-${d}-${h}`;b.onclick=()=>pick(b.dataset.id);c.appendChild(b)});days.appendChild(c)});
+H.forEach(([lab,hs])=>{const l=document.createElement("div");l.className="lab";l.textContent=lab;c.appendChild(l);hs.forEach(h=>{const b=document.createElement("button");b.type="button";b.className="slot";b.textContent=h+":00";b.dataset.id=`2026-10-${d}-${h}`;b.onclick=()=>pick(b.dataset.id);c.appendChild(b)})});days.appendChild(c)});
 function pick(id){sel=id;document.querySelectorAll(".slot").forEach(b=>b.classList.toggle("sel",b.dataset.id==id));const s=document.getElementById("sum");s.style.display="block";s.innerHTML="Visita seleccionada: <strong>"+txt(id)+"</strong>"}
 if(q.get("nom"))nom.value=q.get("nom");if(q.get("email"))email.value=q.get("email");
 if(q.get("slot")&&document.querySelector(`[data-id="${q.get("slot")}"]`))pick(q.get("slot"));
