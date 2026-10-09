@@ -25,7 +25,7 @@ footer{background:var(--dark);color:#fff;text-align:center;font-size:13px;line-h
 </style></head><body><div class="bar"></div><div class="wrap">
 <header><img src="https://www.kidsandus.es/static/kidsandus-logo-schema.png" alt="Kids&amp;Us"><p>VALLS</p></header>
 <div id="main">
-<div class="card"><h1>Reserva la teva visita al centre</h1><p class="sub">Vine a conèixer la nostra escola, el mètode Kids&amp;Us i l'equip. La visita és gratuïta i dura uns 30 minuts.</p></div>
+<div class="card"><h1>Reserva la teva visita al centre</h1><p class="sub">Vine a conèixer la nostra escola, el mètode Kids&amp;Us i l'equip. La visita és gratuïta i dura aproximadament una hora.</p></div>
 <div class="card"><h2><span>1</span>Tria dia i hora</h2><div class="days" id="days"></div><div class="sum" id="sum" style="display:none"></div></div>
 <form class="card" id="f" novalidate><h2><span>2</span>Les vostres dades</h2>
 <label for="nom">Nom i cognoms del pare, mare o tutor *</label><input id="nom" name="nom" required autocomplete="name">
@@ -62,7 +62,7 @@ try{const r=await fetch(ENDPOINT,{method:"POST",headers:{"Content-Type":"applica
 const j=await r.json().catch(()=>({}));if(!r.ok||j.success==="false"||j.success===false)throw 0;done()}
 catch(_){err.textContent="No s'ha pogut enviar la reserva. Torneu-ho a provar o truqueu al 647 228 897.";go.disabled=false;go.textContent="Confirmar la visita"}};
 function done(){main.style.display="none";ok.style.display="block";okt.innerHTML="Us esperem el <strong>"+txt(sel)+"</strong>.";
-const[y,m,d,h]=sel.split("-"),st=`${y}${m}${d}T${h}0000`,en=`${y}${m}${d}T${h}3000`,now=new Date().toISOString().replace(/[-:]/g,"").split(".")[0]+"Z";
+const[y,m,d,h]=sel.split("-"),st=`${y}${m}${d}T${h}0000`,en=`${y}${m}${d}T${String(+h+1).padStart(2,"0")}0000`,now=new Date().toISOString().replace(/[-:]/g,"").split(".")[0]+"Z";
 const ics=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Kids&Us Valls//Visita//CA","BEGIN:VEVENT","UID:"+sel+"-"+Date.now()+"@kidsandusvalls","DTSTAMP:"+now,
 "DTSTART;TZID=Europe/Madrid:"+st,"DTEND;TZID=Europe/Madrid:"+en,"SUMMARY:Visita a Kids&Us Valls","LOCATION:Carrer Prat de la Riba\\, 12\\, 43800 Valls",
 "DESCRIPTION:Visita al centre Kids&Us Valls. Telèfon: 647 228 897","END:VEVENT","END:VCALENDAR"].join("\r\n");
