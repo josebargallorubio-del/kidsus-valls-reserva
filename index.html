@@ -13,20 +13,24 @@ h2{font-size:18px;margin:0 0 14px}h2 span{display:inline-block;width:26px;height
 .days{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}@media(min-width:560px){.days{grid-template-columns:repeat(4,1fr)}}
 .day{border:2px solid #eee;border-radius:14px;padding:10px;text-align:center}.day b{display:block;font-size:13px;color:#7a7a7a;text-transform:uppercase}.day .n{font-size:28px;font-weight:bold;color:var(--dark)}
 .slot{display:block;width:100%;margin-top:8px;padding:10px;border:2px solid var(--teal);background:#fff;color:var(--teal);border-radius:24px;font-weight:bold;font-size:15px;cursor:pointer}
+.slot.off{border-color:#ddd;color:#aaa;background:#f7f7f7;cursor:not-allowed;text-decoration:line-through}
 .lab{margin-top:12px;font-size:12px;font-weight:bold;text-transform:uppercase;letter-spacing:.5px;color:#888}
 .slot.sel{background:var(--teal);color:#fff}
+.banner{background:#fff6e8;border:1px solid #f3ddb0;border-radius:12px;padding:12px;margin:0 0 12px;font-size:14px;line-height:1.45}
+.empty{text-align:center;color:#7a7a7a;padding:8px 4px;line-height:1.45}
 label{display:block;font-size:14px;font-weight:bold;margin:12px 0 5px}input,select,textarea{width:100%;padding:12px;border:1.5px solid #ddd;border-radius:10px;font-size:16px;font-family:inherit}
 input:focus,select:focus,textarea:focus{outline:none;border-color:var(--teal)}.row{display:grid;grid-template-columns:2fr 1fr;gap:10px}
 .btn{display:block;width:100%;padding:15px;border:0;border-radius:30px;background:var(--red);color:#fff;font-size:17px;font-weight:bold;cursor:pointer;margin-top:18px;text-decoration:none;text-align:center}
 .btn:disabled{opacity:.6}.btn.alt{background:var(--teal)}.sum{background:#fdf1f3;border-radius:12px;padding:12px;margin-top:14px;font-size:15px}
 .err{color:var(--red);font-size:14px;margin-top:10px;min-height:1em}.priv{font-size:12px;color:#7a7a7a;margin-top:10px}
+.hp{position:absolute;left:-9999px;height:0;width:0;overflow:hidden}
 footer{background:var(--dark);color:#fff;text-align:center;font-size:13px;line-height:1.6;padding:20px;border-radius:18px}footer a{color:#fff}
 #ok{display:none;text-align:center}#ok .tick{width:64px;height:64px;border-radius:50%;background:var(--green);color:#fff;font-size:36px;line-height:64px;margin:0 auto 10px}
 </style></head><body><div class="bar"></div><div class="wrap">
 <header><img src="https://josebargallorubio-del.github.io/kidsus-valls-reserva/logo.png" alt="Kids&amp;Us"><p>VALLS</p></header>
 <div id="main">
-<div class="card"><h1>Reserva la teva visita al centre</h1><p class="sub">Vine a conèixer la nostra escola, el mètode Kids&amp;Us i l'equip. La visita és gratuïta i dura aproximadament una hora.</p></div>
-<div class="card"><h2><span>1</span>Tria dia i hora</h2><div class="days" id="days"></div><div class="sum" id="sum" style="display:none"></div></div>
+<div class="card"><h1>Reserva la teva visita al centre</h1><p class="sub">Vine a conèixer la nostra escola, el mètode Kids&amp;Us i l'equip. La visita és gratuïta i dura aproximadament una hora. Horaris de dimarts a divendres, a les 11:00, les 17:00 i les 18:00.</p></div>
+<div class="card"><h2><span>1</span>Tria dia i hora</h2><div class="banner" id="slotmsg" hidden></div><div class="days" id="days"></div><div class="sum" id="sum" style="display:none"></div></div>
 <form class="card" id="f" novalidate><h2><span>2</span>Les vostres dades</h2>
 <label for="nom">Nom i cognoms del pare, mare o tutor *</label><input id="nom" name="nom" required autocomplete="name">
 <label for="email">Correu electrònic *</label><input id="email" name="email" type="email" required autocomplete="email">
@@ -35,36 +39,161 @@ footer{background:var(--dark);color:#fff;text-align:center;font-size:13px;line-h
 <div><label for="edat">Edat *</label><select id="edat" name="edat" required><option value="">—</option>
 <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option><option>13+</option></select></div></div>
 <label for="com">Comentaris</label><textarea id="com" name="comentaris" rows="3"></textarea>
-<button class="btn" id="go">Confirmar la visita</button><div class="err" id="err"></div>
+<label class="hp">No ompliu aquest camp<input name="company" tabindex="-1" autocomplete="off"></label>
+<button class="btn" id="go" type="submit">Confirmar la visita</button><div class="err" id="err" role="alert"></div>
 <p class="priv">Les vostres dades només s'utilitzaran per gestionar aquesta visita.</p></form>
 </div>
 <div class="card" id="ok"><div class="tick">✓</div><h1>Visita reservada!</h1><p class="sub" id="okt"></p>
-<p class="sub">Carrer Prat de la Riba, 12 · 43800 Valls</p><a class="btn alt" id="ics" href="#">Afegir al calendari</a></div>
+<p class="sub">Us esperem a Carrer Prat de la Riba, 12 · 43800 Valls. La visita dura aproximadament una hora.</p>
+<p class="sub">Si necessiteu canviar l'hora, truqueu al <a href="tel:+34647228897">647 228 897</a>.</p>
+<a class="btn alt" id="ics" href="#">Afegir al calendari</a></div>
 <footer><strong>Kids&amp;Us Valls</strong><br>Carrer Prat de la Riba, 12 · 43800 Valls<br>Telèfon: <a href="tel:+34647228897">647 228 897</a></footer>
 </div>
+<script src="reserva.js"></script>
 <script>
-const ENDPOINT="https://formsubmit.co/ajax/josebargallorubio@gmail.com";
-const D=[["dimarts",13],["dimecres",14],["dijous",15],["divendres",16]],H=[["Matí",["11"]],["Tarda",["17","18"]]];
-const q=new URLSearchParams(location.search);let sel=null;
-const txt=id=>{const[,,d,h]=id.split("-");const n=D.find(x=>x[1]==+d)[0];return `${n} ${+d} d'octubre de 2026 a les ${h}:00 h`};
-const days=document.getElementById("days");
-D.forEach(([n,d])=>{const c=document.createElement("div");c.className="day";c.innerHTML=`<b>${n}</b><div class="n">${d}</div><small>octubre</small>`;
-H.forEach(([lab,hs])=>{const l=document.createElement("div");l.className="lab";l.textContent=lab;c.appendChild(l);hs.forEach(h=>{const b=document.createElement("button");b.type="button";b.className="slot";b.textContent=h+":00";b.dataset.id=`2026-10-${d}-${h}`;b.onclick=()=>pick(b.dataset.id);c.appendChild(b)})});days.appendChild(c)});
-function pick(id){sel=id;document.querySelectorAll(".slot").forEach(b=>b.classList.toggle("sel",b.dataset.id==id));const s=document.getElementById("sum");s.style.display="block";s.innerHTML="Visita seleccionada: <strong>"+txt(id)+"</strong>"}
-if(q.get("nom"))nom.value=q.get("nom");if(q.get("email"))email.value=q.get("email");
-if(q.get("slot")&&document.querySelector(`[data-id="${q.get("slot")}"]`))pick(q.get("slot"));
-document.getElementById("f").onsubmit=async e=>{e.preventDefault();const err=document.getElementById("err");err.textContent="";
-if(!sel){err.textContent="Si us plau, trieu un dia i una hora.";return}
-const f=e.target;if(!f.checkValidity()){err.textContent="Si us plau, ompliu tots els camps obligatoris amb dades vàlides.";f.reportValidity();return}
-go.disabled=true;go.textContent="Enviant…";
-const data=Object.fromEntries(new FormData(f));Object.assign(data,{visita:txt(sel),_subject:"Nova reserva de visita: "+data.nom+" ("+txt(sel)+")",_template:"table",_captcha:"false",_replyto:data.email});
-try{const r=await fetch(ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify(data)});
-const j=await r.json().catch(()=>({}));if(!r.ok||j.success==="false"||j.success===false)throw 0;done()}
-catch(_){err.textContent="No s'ha pogut enviar la reserva. Torneu-ho a provar o truqueu al 647 228 897.";go.disabled=false;go.textContent="Confirmar la visita"}};
-function done(){main.style.display="none";ok.style.display="block";okt.innerHTML="Us esperem el <strong>"+txt(sel)+"</strong>.";
-const[y,m,d,h]=sel.split("-"),st=`${y}${m}${d}T${h}0000`,en=`${y}${m}${d}T${String(+h+1).padStart(2,"0")}0000`,now=new Date().toISOString().replace(/[-:]/g,"").split(".")[0]+"Z";
-const ics=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Kids&Us Valls//Visita//CA","BEGIN:VEVENT","UID:"+sel+"-"+Date.now()+"@kidsandusvalls","DTSTAMP:"+now,
-"DTSTART;TZID=Europe/Madrid:"+st,"DTEND;TZID=Europe/Madrid:"+en,"SUMMARY:Visita a Kids&Us Valls","LOCATION:Carrer Prat de la Riba\\, 12\\, 43800 Valls",
-"DESCRIPTION:Visita al centre Kids&Us Valls. Telèfon: 647 228 897","END:VEVENT","END:VCALENDAR"].join("\r\n");
-const a=document.getElementById("ics");a.href=URL.createObjectURL(new Blob([ics],{type:"text/calendar"}));a.download="visita-kidsandus-valls.ics";scrollTo(0,0)}
+(function () {
+  var R = window.Reserva;
+  var q = new URLSearchParams(location.search);
+  var sel = null;
+  var daysEl = document.getElementById("days");
+  var sumEl = document.getElementById("sum");
+  var msgEl = document.getElementById("slotmsg");
+  var errEl = document.getElementById("err");
+  var openIds = {};
+
+  if (q.get("nom")) document.getElementById("nom").value = q.get("nom");
+  if (q.get("email")) document.getElementById("email").value = q.get("email");
+
+  function showMsg(t) {
+    if (!t) { msgEl.hidden = true; msgEl.textContent = ""; return; }
+    msgEl.hidden = false;
+    msgEl.textContent = t;
+  }
+
+  function paint(days) {
+    daysEl.innerHTML = "";
+    openIds = {};
+    if (!days.length) {
+      daysEl.innerHTML = '<p class="empty">Ara mateix no hi ha hores lliures en les properes setmanes. Truqueu-nos al <a href="tel:+34647228897">647 228 897</a>.</p>';
+      return;
+    }
+    days.forEach(function (day) {
+      var c = document.createElement("div");
+      c.className = "day";
+      c.innerHTML = "<b>" + day.weekday + "</b><div class=\"n\">" + day.day + "</div><small>" + day.month + "</small>";
+      var lastGroup = "";
+      day.slots.forEach(function (s) {
+        if (s.group !== lastGroup) {
+          var l = document.createElement("div");
+          l.className = "lab";
+          l.textContent = s.group;
+          c.appendChild(l);
+          lastGroup = s.group;
+        }
+        var b = document.createElement("button");
+        b.type = "button";
+        b.className = "slot" + (s.taken ? " off" : "");
+        b.textContent = s.taken ? s.time + " ocupat" : s.time;
+        b.dataset.id = s.id;
+        b.disabled = !!s.taken;
+        if (!s.taken) {
+          openIds[s.id] = 1;
+          b.onclick = function () { pick(s.id); };
+        }
+        c.appendChild(b);
+      });
+      daysEl.appendChild(c);
+    });
+  }
+
+  function pick(id) {
+    if (!openIds[id]) return;
+    sel = id;
+    document.querySelectorAll(".slot").forEach(function (b) { b.classList.toggle("sel", b.dataset.id === id); });
+    sumEl.style.display = "block";
+    sumEl.innerHTML = "Visita seleccionada: <strong>" + R.labelOf(id) + "</strong>";
+  }
+
+  function render(booked) {
+    var keep = sel;
+    var days = R.buildDays(new Date(), booked || {});
+    var wanted = R.normalizeSlot(q.get("slot") || "");
+    paint(days);
+    if (wanted && openIds[wanted]) pick(wanted);
+    else if (keep && openIds[keep]) pick(keep);
+    else if (wanted) showMsg("L'horari de l'enllaç ja no està disponible: ha passat, queda massa a prop o ja està reservat. Trieu un altre dia i una altra hora.");
+    if (sel && !openIds[sel]) {
+      sel = null;
+      sumEl.style.display = "none";
+    }
+  }
+
+  render({});
+  R.binGet().then(function (rec) { render(R.takenMap(rec)); }).catch(function () {
+    if (msgEl.hidden) showMsg("No hem pogut comprovar quines hores estan ocupades. Si en trieu una que ja estigui reservada, us ho direm en enviar.");
+  });
+
+  document.getElementById("f").onsubmit = async function (e) {
+    e.preventDefault();
+    errEl.textContent = "";
+    var fd = new FormData(e.target);
+    var v = {
+      company: fd.get("company"), nom: fd.get("nom"), email: fd.get("email"),
+      telefon: fd.get("telefon"), infant: fd.get("infant"), edat: fd.get("edat"),
+      comentaris: fd.get("comentaris")
+    };
+    if (R.validate(v) === "bot") return;
+    if (!sel) { errEl.textContent = "Si us plau, trieu un dia i una hora."; return; }
+    var bad = R.validate(v);
+    if (bad) { errEl.textContent = bad; e.target.reportValidity(); return; }
+    var fresh = R.buildDays(new Date(), {});
+    var still = false;
+    fresh.forEach(function (d) { d.slots.forEach(function (s) { if (s.id === sel) still = true; }); });
+    if (!still) {
+      errEl.textContent = "Aquesta hora ja no es pot reservar. Trieu-ne una altra.";
+      render({});
+      R.binGet().then(function (rec) { render(R.takenMap(rec)); }).catch(function () {});
+      return;
+    }
+    var go = document.getElementById("go");
+    go.disabled = true;
+    go.textContent = "Enviant…";
+    var entry = R.buildBooking(v, sel);
+    try {
+      var saved = await R.saveBooking(entry);
+      fetch(R.CFG.mail, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(R.mailPayload(saved))
+      }).catch(function () {});
+      done(saved);
+    } catch (err) {
+      go.disabled = false;
+      go.textContent = "Confirmar la visita";
+      if (err && err.code === "taken") {
+        errEl.textContent = "Aquest horari acaba de quedar reservat. Trieu-ne un altre.";
+        sel = null;
+        sumEl.style.display = "none";
+        R.binGet().then(function (rec) { render(R.takenMap(rec)); }).catch(function () {});
+        return;
+      }
+      if (err && err.code === "limit") {
+        errEl.textContent = "Ja teniu dues visites reservades. Si necessiteu canviar l'hora, truqueu al 647 228 897.";
+        return;
+      }
+      errEl.textContent = "No s'ha pogut enviar la reserva. Torneu-ho a provar o truqueu al 647 228 897.";
+    }
+  };
+
+  function done(entry) {
+    document.getElementById("main").style.display = "none";
+    var ok = document.getElementById("ok");
+    ok.style.display = "block";
+    document.getElementById("okt").innerHTML = "Us esperem el <strong>" + R.labelOf(entry.slot) + "</strong>.";
+    var a = document.getElementById("ics");
+    a.href = URL.createObjectURL(new Blob([R.icsFor(entry)], { type: "text/calendar" }));
+    a.download = "visita-kidsandus-valls.ics";
+    scrollTo(0, 0);
+  }
+})();
 </script></body></html>
