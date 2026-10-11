@@ -63,6 +63,11 @@ footer{background:var(--dark);color:#fff;text-align:center;font-size:13px;line-h
 
   if (q.get("nom")) document.getElementById("nom").value = q.get("nom");
   if (q.get("email")) document.getElementById("email").value = q.get("email");
+  if (q.get("tel")) document.getElementById("tel").value = R.displayPhone(q.get("tel"));
+  if (q.get("edat")) {
+    var age = R.mapAge(q.get("edat"));
+    if (age) document.getElementById("edat").value = age;
+  }
 
   function showMsg(t) {
     if (!t) { msgEl.hidden = true; msgEl.textContent = ""; return; }

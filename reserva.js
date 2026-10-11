@@ -156,6 +156,33 @@
     return d;
   }
 
+  /* Valor de ?tel= per al camp (número local, agrupat). 34640524958 → 640 524 958. */
+  function displayPhone(raw) {
+    var d = String(raw || "").replace(/\D/g, "");
+    if (d.indexOf("0034") === 0) d = d.slice(4);
+    if (d.length === 11 && d.indexOf("34") === 0) d = d.slice(2);
+    if (d.length === 9) return d.slice(0, 3) + " " + d.slice(3, 6) + " " + d.slice(6);
+    return d;
+  }
+
+  var AGES = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13+"];
+
+  /* ?edat= → opció del desplegable. Accepta un número o un tram de Meta
+     (1_o_2_anys, 3_o_4_anys, 5,_6_o_7_anys). El tram es tanca a l'edat
+     més propera al punt mig (1–2 → 2, 3–4 → 4, 5–7 → 6). */
+  function mapAge(raw) {
+    var s = String(raw == null ? "" : raw).trim().toLowerCase();
+    if (!s) return "";
+    if (AGES.indexOf(s) >= 0) return s;
+    var nums = (s.match(/\d+/g) || []).map(Number);
+    if (!nums.length) return "";
+    var target = nums.length === 1 ? nums[0] : (Math.min.apply(null, nums) + Math.max.apply(null, nums)) / 2;
+    var n = Math.round(target);
+    if (n >= 13) return "13+";
+    if (n < 1) return "1";
+    return String(n);
+  }
+
   function takenMap(rec) {
     var map = {};
     var list = rec && Array.isArray(rec.bookings) ? rec.bookings : [];
@@ -369,7 +396,7 @@
     madridParts: madridParts, weekdayOfYmd: weekdayOfYmd, addDays: addDays,
     expandClosed: expandClosed, zonedToMs: zonedToMs, normalizeSlot: normalizeSlot,
     slotTime: slotTime, labelOf: labelOf, buildDays: buildDays,
-    normEmail: normEmail, normPhone: normPhone, takenMap: takenMap,
+    normEmail: normEmail, normPhone: normPhone, displayPhone: displayPhone, mapAge: mapAge, takenMap: takenMap,
     validate: validate, buildBooking: buildBooking, notesOf: notesOf, applyBookings: applyBookings,
     binGet: binGet, binPut: binPut, saveBooking: saveBooking, mailPayload: mailPayload, icsFor: icsFor
   };
