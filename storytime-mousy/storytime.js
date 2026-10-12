@@ -1,4 +1,4 @@
-/* Storytime Mousy and the Big Red Boat (17/10/2026). Each signup:
+/* Storytime Mousy and the Big Red Ball (17/10/2026). Each signup:
    1) is saved in the form bin (app → Màrqueting → Formularis), always;
    2) becomes a lead (source "storytime-mousy", status Nou) in the app's main bin,
       unless the phone already is a lead or belongs to a family/student. */
@@ -8,7 +8,7 @@
   var FORM_BIN = "6accbdb2ffd5d1605363eba3";
   var MAIN_BIN = "6a9f5571ac6210605ab18f96";
   var ACTION = "1792000000000-mousy";
-  var EVENT = "Storytime Mousy and the Big Red Boat · Kids&Us Valls · 17/10/2026 11:00";
+  var EVENT = "Storytime Mousy and the Big Red Ball · Kids&Us Valls · 17/10/2026 11:00";
   var NON_LEAD_TPL = /festiu|avis|recordatori|rebut|pagament|classe|alumne|familia|família|horari|tancat|vacances/i;
 
   function digits(s) { return String(s == null ? "" : s).replace(/\D/g, ""); }
@@ -71,7 +71,7 @@
           id: Date.now() + "-" + Math.random().toString(36).slice(2, 7),
           name: entry.parent, phone: entry.phone, email: entry.email,
           visitDate: "", visitTime: "", group: "",
-          notes: "Inscrit a Storytime Mousy and the Big Red Boat (Kids&Us Valls, 17/10/2026 11:00) · Infant: " + entry.child + " · Edat: " + entry.age + " anys" + (entry.email ? " · Email: " + entry.email : ""),
+          notes: "Inscrit a Storytime Mousy and the Big Red Ball (Kids&Us Valls, 17/10/2026 11:00) · Infant: " + entry.child + " · Edat: " + entry.age + " anys" + (entry.email ? " · Email: " + entry.email : ""),
           source: "storytime-mousy", status: "Nou", accio: ACTION, event: EVENT,
           childName: entry.child, childAge: entry.age + " anys",
           createdAt: new Date().toISOString(), formEntryId: entry.id
