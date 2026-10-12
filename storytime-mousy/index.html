@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ca"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Storytime Mousy and the Big Red Boat · Kids&amp;Us Valls</title>
+<meta name="description" content="Storytime gratuït en anglès per a infants de 3 a 7 anys. Dissabte 17/10 a les 11:00 a Kids&amp;Us Valls.">
+<meta name="theme-color" content="#EA5160">
+<style>
+@font-face{font-family:DIN;src:url(fonts/DINosaurKU-Book.woff2) format("woff2");font-weight:400}
+@font-face{font-family:DIN;src:url(fonts/DINosaurKU-Bold.woff2) format("woff2");font-weight:700}
+@font-face{font-family:DIN;src:url(fonts/DINosaurKU-Black.woff2) format("woff2");font-weight:900}
+*{box-sizing:border-box}body{margin:0;font-family:DIN,system-ui,sans-serif;background:#FFF4EF;color:#2B2B2B}
+.wrap{max-width:480px;margin:0 auto;padding:18px 16px 40px}
+.logos{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:14px}
+.logos img{height:46px;width:auto}
+.hero{background:#EA5160;color:#fff;border-radius:22px;padding:22px 20px;box-shadow:0 8px 24px rgba(234,81,96,.25)}
+.k{font-weight:700;font-size:13px;letter-spacing:.08em;text-transform:uppercase;opacity:.9}
+h1{font-weight:900;font-size:28px;line-height:1.08;margin:6px 0 10px}
+.hero p{margin:0 0 12px;font-size:16px;line-height:1.35}
+.meta{display:flex;flex-wrap:wrap;gap:8px}.meta span{background:rgba(255,255,255,.2);border-radius:999px;padding:6px 11px;font-weight:700;font-size:14px}
+form,.ok{background:#fff;border-radius:22px;padding:20px;margin-top:16px;box-shadow:0 4px 18px rgba(0,0,0,.06)}
+label.f{display:block;font-weight:700;font-size:15px;margin:0 0 14px}
+label.f small{font-weight:400;color:#888}
+input[type=text],input[type=tel],input[type=email]{display:block;width:100%;margin-top:6px;font:inherit;font-size:17px;padding:13px 14px;border:2px solid #F1D9D4;border-radius:14px;background:#FFFBFA;color:#2B2B2B}
+input:focus{outline:none;border-color:#EA5160}
+.ages{display:flex;gap:8px;margin-top:8px}.ages label{flex:1}.ages input{position:absolute;opacity:0}
+.ages span{display:block;text-align:center;padding:12px 0;border:2px solid #F1D9D4;border-radius:14px;font-weight:900;font-size:18px;cursor:pointer;background:#FFFBFA}
+.ages input:checked+span{background:#EA5160;border-color:#EA5160;color:#fff}
+.consent{display:flex;gap:10px;align-items:flex-start;font-size:14px;line-height:1.35;margin:4px 0 14px}
+.consent input{width:22px;height:22px;flex:none;accent-color:#EA5160;margin:0}
+.consent a{color:#EA5160}
+.hp{position:absolute;left:-9999px}
+.err{color:#B3261E;font-weight:700;min-height:1em;margin-bottom:10px}
+button{width:100%;border:0;border-radius:16px;background:#EA5160;color:#fff;font:inherit;font-weight:900;font-size:19px;padding:16px}
+button:disabled{opacity:.6}
+.ok{display:none;text-align:center}.ok .big{font-size:54px}.ok h2{font-weight:900;font-size:26px;margin:6px 0 8px;color:#EA5160}.ok p{font-size:17px;line-height:1.4}
+.foot{text-align:center;font-size:13px;color:#999;margin-top:18px}
+</style></head><body>
+<div class="wrap">
+  <div class="logos"><img src="../logo.png" alt="Kids&amp;Us Valls"></div>
+  <div class="hero" id="hero">
+    <div class="k">Storytime · Gratuït</div>
+    <h1>Mousy and the Big Red Boat</h1>
+    <p>Un contacontes en anglès per als més petits. Vine a escoltar, cantar i jugar amb nosaltres!</p>
+    <div class="meta"><span>📅 Dissabte 17/10</span><span>🕚 11:00 h</span><span>📍 Kids&amp;Us Valls · C/ Prat de la Riba, 12</span><span>👧 3–7 anys</span></div>
+  </div>
+  <form id="f" novalidate>
+    <label class="f">Nom de la mare, el pare o tutor/a<input type="text" name="parent" autocomplete="name" required></label>
+    <label class="f">Telèfon<input type="tel" name="phone" autocomplete="tel" inputmode="tel" placeholder="6XX XXX XXX" required></label>
+    <label class="f">Correu electrònic <small>(opcional)</small><input type="email" name="email" autocomplete="email"></label>
+    <label class="f">Nom de l'infant<input type="text" name="child" autocomplete="off" required></label>
+    <div class="f" style="font-weight:700;font-size:15px;margin-bottom:14px">Edat de l'infant
+      <div class="ages"><label><input type="radio" name="age" value="3"><span>3</span></label><label><input type="radio" name="age" value="4"><span>4</span></label><label><input type="radio" name="age" value="5"><span>5</span></label><label><input type="radio" name="age" value="6"><span>6</span></label><label><input type="radio" name="age" value="7"><span>7</span></label></div>
+    </div>
+    <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off">
+    <label class="consent"><input type="checkbox" name="consent"><span>Accepto que Kids&amp;Us Valls faci servir aquestes dades per gestionar la inscripció i contactar-me sobre aquesta activitat i sobre les seves classes. Pots demanar que les esborrem quan vulguis trucant al 647 228 897.</span></label>
+    <div class="err" id="err"></div>
+    <button type="submit" id="go">Inscriure'm</button>
+  </form>
+  <div class="ok" id="ok"><div class="big">🎉</div><h2>Inscripció rebuda!</h2><p id="okt">Us esperem dissabte 17/10 a les 11:00 a Kids&amp;Us Valls!</p><button type="button" id="again" style="margin-top:8px;background:#fff;color:#EA5160;border:2px solid #EA5160">Inscriure un altre infant</button></div>
+  <p class="foot">Kids&amp;Us Valls · 647 228 897</p>
+</div>
+<script src="storytime.js"></script>
+</body></html>
